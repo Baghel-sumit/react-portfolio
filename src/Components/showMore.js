@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 
 const ShowMore = ({ className, text, moreText, disabled }) => {
-  const [isShowMore, setIsShowMore] = useState(false);
+  const [isShowMore, setIsShowMore] = useState(true);
 
   return (
     <div className={`${className}`}>
