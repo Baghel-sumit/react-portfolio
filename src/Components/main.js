@@ -1,8 +1,10 @@
 import React from 'react'
 import DotsComponent from './dots'
+import Experience from './experience';
+import SkillItem from './skillItem';
+import ShowMore from './showMore';
 
-const MainComponent = (props) => {
-    const { homeSection, aboutSection, portfolioSection, workSection } = props;
+const MainComponent = ({ homeSection, aboutSection, portfolioSection, workSection }) => {
   return (
     <main className='container'>
 
@@ -13,10 +15,10 @@ const MainComponent = (props) => {
                 Hi,
             </h1>
             <h2 className="text-5xl md:text-7xl font-bold mt-2">
-                I am <span className="text-primary">Sumit Dev</span>
+                I am <span className="text-primary">Sumit</span>
             </h2>
             <h3 className="text-2xl md:text-3xl font-bold opacity-70 my-10 capitalize">
-                MERN stack developer
+                Full Stack Developer
             </h3>
             <a href="#portfolio" className="btn-primary">
                 See my work
@@ -34,33 +36,26 @@ const MainComponent = (props) => {
       <section id="about" className="py-32">
         {/* Describe */}
         <div className="flex flex-col md:flex-row items-center justify-center gap-10 md:gap-20">
-          <div className="rounded-full w-48 md:w-64 h-48 md:h-64 overflow-hidden bg-primary-default">
-              <img 
-              className="w-full h-full object-cover opacity-90"
-              src={aboutSection.describe.imgPath} 
-              alt="profile"/>
-          </div>
-          <div className="w-full md:w-1/2 text-base md:text-lg text-center md:text-left">
+          <div className="w-full text-base md:text-lg text-center md:text-left">
               <h2 className="text-primary font-bold text-2xl md:text-3xl mb-3">
                   {aboutSection.describe.title}
               </h2>
-              {aboutSection.describe.texts.map((text, index)=> (
-                <p className="mb-3 opacity-80" key={text+index}> {text} </p>
+              {aboutSection.describe.texts.map((item, index)=> (
+                <ShowMore disabled={index !== 0} className="mb-3 opacity-80" text={item.text} moreText={item.moreText} key={item.text+index} />
               ))}
           </div>
         </div>
 
         {/* My Skills */}
         <div className="mt-32 text-center">
-          <h2 className="text-primary text-3xl md:text-4xl font-bold mb-14">
+          <h2 className="text-4xl md:text-5xl text-center text-primary-default md:text-center font-bold mb-8 md:mb-12">
               {aboutSection.mySkills.title}
           </h2>
-          <div className="flex flex-wrap items-center justify-center gap-24 md:gap-12">
-            {aboutSection.mySkills.skillItems.map((skill, index)=>(
-                <div className="skill" key={skill+index} data-text={skill.dataText}>
-                    <img src={skill.imgPath} alt={skill.alt}/>
-                </div>
+          <div className="flex flex-wrap items-center gap-24 md:gap-12">
+            {aboutSection.mySkills.sections.map((item)=> (
+                <SkillItem skills={item.skills} title={item.title} />
             ))}
+            {/* <img src="/images/skills/side_image.png" alt="" className='md:inline hidden' /> */}
           </div>
         </div>
       </section>
@@ -71,21 +66,11 @@ const MainComponent = (props) => {
       {/* work experience */}
       <section id="work" className='pt-32'>
         <h2 className='work-heading'>
-            {workSection.title}
+            {workSection.title + ' - ' + workSection.experienceText}
         </h2>
-        <div className="work-container">
-            {workSection.organizations.map((item, index)=> (
-                <div className="working-org" key={item+index}>
-                    <div className="work-top">
-                        <h4 className='text-xl md:text-lg'>{item.title}</h4>
-                        <em className='italic'>{item.timeLine}</em>
-                    </div>
-                    <ul className="work-list">
-                        {item.workList.map((work, index)=>(
-                            <li className='mb-1' key={work+index}>{work}</li>
-                        ))}
-                    </ul>
-                </div>
+        <div className="flex flex-wrap justify-between items-start gap-4">
+            {workSection.organizations.map((org)=> (
+                <Experience link={org.link} logoPath={org.logoPath} timeline={org.timeline} title={org.title} workList={org.workList} />
             ))}
         </div>
       </section>

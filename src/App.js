@@ -6,7 +6,7 @@ import MainComponent from './Components/main';
 import FooterComponent from './Components/footer';
 
 const App = () => {
-  const { navData, mainData, footerData }  = appData;
+  const { navData, mainData, footerData }  = appData();
   return (
     <>
       {/* Navbar */}
